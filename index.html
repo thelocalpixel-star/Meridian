@@ -1083,29 +1083,209 @@ footer { background:#050c18; border-top:1px solid rgba(201,168,76,0.1); padding:
 }
 
 /* ─── FLOATING CTA ─── */
-#floating-cta {
-  position:fixed; bottom:2rem; left:50%; transform:translateX(-50%) translateY(120px);
-  z-index:160; transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1);
-  pointer-events:none; opacity:0;
-  width:min(90vw, 520px);
+/* ─── VIDEO ASK WIDGET ─── */
+#va-bubble {
+  position:fixed; bottom:1.8rem; right:1.8rem; z-index:300;
+  width:68px; height:68px; border-radius:50%;
+  cursor:pointer; overflow:hidden;
+  box-shadow:0 4px 24px rgba(0,0,0,0.5), 0 0 0 3px var(--gold);
+  transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s;
+  animation:va-pulse 3s ease-in-out infinite 2s;
 }
-#floating-cta.visible { transform:translateX(-50%) translateY(0); pointer-events:auto; opacity:1; }
-.fcta-inner {
-  background:rgba(14,28,53,0.95); backdrop-filter:blur(20px);
+#va-bubble:hover { transform:scale(1.08); box-shadow:0 6px 32px rgba(0,0,0,0.6), 0 0 0 4px var(--gold-light); }
+#va-bubble video { width:100%; height:100%; object-fit:cover; }
+#va-bubble-label {
+  position:fixed; bottom:6.4rem; right:1.8rem; z-index:300;
+  background:rgba(14,28,53,0.95); backdrop-filter:blur(12px);
   border:1px solid rgba(201,168,76,0.3);
-  padding:1rem 1.3rem; display:flex; align-items:center; gap:1rem;
-  box-shadow:0 8px 40px rgba(0,0,0,0.4);
+  padding:0.45rem 0.85rem; font-size:0.72rem; letter-spacing:0.06em;
+  text-transform:uppercase; color:var(--gold); white-space:nowrap;
+  box-shadow:0 4px 16px rgba(0,0,0,0.4);
+  opacity:0; transform:translateY(6px);
+  transition:opacity 0.3s, transform 0.3s;
+  pointer-events:none;
 }
-.fcta-text { flex:1; }
-.fcta-title { font-family:var(--font-serif); font-size:1rem; font-weight:400; color:var(--white); }
-.fcta-sub { font-size:0.73rem; color:var(--muted); margin-top:0.1rem; }
-.fcta-btn { white-space:nowrap; padding:0.65rem 1.3rem; flex-shrink:0; }
-.fcta-close {
-  background:none; border:none; color:var(--muted); cursor:pointer;
-  font-size:1rem; padding:0.3rem; flex-shrink:0; transition:color 0.2s;
-  line-height:1;
+#va-bubble:hover + #va-bubble-label,
+#va-bubble-label.show { opacity:1; transform:translateY(0); }
+
+@keyframes va-pulse {
+  0%,100% { box-shadow:0 4px 24px rgba(0,0,0,0.5), 0 0 0 3px var(--gold); }
+  50% { box-shadow:0 4px 24px rgba(0,0,0,0.5), 0 0 0 6px rgba(201,168,76,0.4), 0 0 0 10px rgba(201,168,76,0.12); }
 }
-.fcta-close:hover { color:var(--white); }
+
+#va-panel {
+  position:fixed;
+  bottom:6rem; right:1.8rem;
+  z-index:299;
+  width:min(420px, calc(100vw - 2rem));
+  max-height:min(660px, calc(100dvh - 7rem));
+  background:var(--navy-card);
+  border:1px solid rgba(201,168,76,0.2);
+  box-shadow:0 12px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(201,168,76,0.08);
+  border-radius:12px;
+  display:flex; flex-direction:column;
+  transform:translateY(20px) scale(0.96);
+  opacity:0; pointer-events:none;
+  transition:transform 0.4s cubic-bezier(0.22,1,0.36,1), opacity 0.35s ease;
+  overflow:hidden;
+}
+#va-panel.open { transform:translateY(0) scale(1); opacity:1; pointer-events:auto; }
+#va-panel.minimized { transform:translateY(20px) scale(0.96); opacity:0; pointer-events:none; }
+
+/* Mobile: full-screen takeover */
+@media(max-width:500px) {
+  #va-panel {
+    bottom:0; right:0; left:0;
+    width:100%; max-height:100dvh;
+    border-radius:16px 16px 0 0;
+    border-left:none; border-right:none; border-bottom:none;
+  }
+  #va-bubble { bottom:1rem; right:1rem; }
+  #va-bubble-label { bottom:5.4rem; right:1rem; }
+}
+
+#va-video-wrap {
+  position:relative; width:100%; height:240px; flex-shrink:0; overflow:hidden;
+  background:#000; border-radius:12px 12px 0 0;
+}
+/* Show person centered — object-position 50% 30% frames face + shoulders */
+#va-video-wrap video { width:100%; height:100%; object-fit:cover; object-position:50% 30%; }
+@media(max-width:500px) {
+  #va-video-wrap { height:200px; border-radius:16px 16px 0 0; }
+}
+#va-video-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(to bottom, rgba(8,15,30,0.05) 0%, rgba(8,15,30,0.55) 100%);
+}
+#va-play-btn {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:52px; height:52px; border-radius:50%;
+  background:rgba(201,168,76,0.9); border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:transform 0.2s, background 0.2s;
+}
+#va-play-btn:hover { transform:translate(-50%,-50%) scale(1.1); background:var(--gold); }
+#va-play-btn svg { width:20px; height:20px; fill:var(--navy); margin-left:3px; }
+#va-play-btn.playing { display:none; }
+
+#va-panel-header {
+  position:absolute; top:0; left:0; right:0;
+  padding:0.75rem 0.85rem;
+  display:flex; align-items:center; justify-content:space-between;
+  z-index:2;
+}
+.va-header-left {
+  font-family:var(--font-serif); font-size:0.9rem; color:var(--white);
+  text-shadow:0 1px 6px rgba(0,0,0,0.9);
+}
+.va-header-btns { display:flex; gap:0.4rem; align-items:center; }
+.va-icon-btn {
+  background:rgba(8,15,30,0.72); border:1px solid rgba(201,168,76,0.28);
+  color:var(--text-light); cursor:pointer; width:30px; height:30px;
+  border-radius:50%; font-size:0.8rem; display:flex; align-items:center; justify-content:center;
+  transition:all 0.2s; backdrop-filter:blur(8px); flex-shrink:0;
+}
+.va-icon-btn:hover { background:rgba(201,168,76,0.2); color:var(--white); border-color:var(--gold); }
+.va-icon-btn svg { width:13px; height:13px; pointer-events:none; }
+
+/* Mute button bottom-left of video */
+#va-mute-btn {
+  position:absolute; bottom:0.65rem; left:0.75rem; z-index:3;
+  background:rgba(8,15,30,0.78); border:1px solid rgba(255,255,255,0.18);
+  color:var(--white); cursor:pointer;
+  padding:0.3rem 0.65rem; border-radius:20px;
+  font-size:0.68rem; letter-spacing:0.07em; text-transform:uppercase;
+  display:flex; align-items:center; gap:0.35rem;
+  transition:all 0.2s; backdrop-filter:blur(8px);
+}
+#va-mute-btn:hover { background:rgba(201,168,76,0.25); border-color:rgba(201,168,76,0.5); }
+#va-mute-btn svg { width:12px; height:12px; flex-shrink:0; }
+
+#va-body { flex:1; overflow-y:auto; padding:1.4rem 1.4rem 1rem; }
+
+/* Steps */
+.va-step { display:none; }
+.va-step.active { display:block; animation:va-step-in 0.35s ease; }
+@keyframes va-step-in { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+.va-q-label {
+  font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:0.6rem;
+}
+.va-q-text {
+  font-family:var(--font-serif); font-size:1.22rem; font-weight:400;
+  line-height:1.4; color:var(--white); margin-bottom:1.1rem;
+}
+.va-choices { display:flex; flex-direction:column; gap:0.55rem; }
+.va-choice {
+  padding:0.7rem 1rem; border:1px solid rgba(201,168,76,0.2);
+  background:rgba(23,45,79,0.5); color:var(--text-light);
+  font-size:0.82rem; cursor:pointer; text-align:left;
+  transition:all 0.2s; position:relative; overflow:hidden;
+}
+.va-choice::before {
+  content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
+  background:var(--gold); transform:scaleY(0); transition:transform 0.2s;
+}
+.va-choice:hover { border-color:rgba(201,168,76,0.5); color:var(--white); background:rgba(23,45,79,0.8); }
+.va-choice.selected { border-color:var(--gold); color:var(--gold); background:rgba(201,168,76,0.08); }
+.va-choice.selected::before { transform:scaleY(1); }
+
+/* Progress dots */
+.va-dots { display:flex; gap:0.4rem; margin-bottom:1rem; }
+.va-dot { width:6px; height:6px; border-radius:50%; background:rgba(201,168,76,0.2); transition:background 0.3s; }
+.va-dot.done { background:var(--gold); }
+.va-dot.active { background:var(--gold-light); }
+
+/* Schedule step */
+#va-step-sched { text-align:center; }
+.va-sched-icon { font-size:2.5rem; margin-bottom:0.6rem; }
+.va-sched-title { font-family:var(--font-serif); font-size:1.4rem; color:var(--white); margin-bottom:0.4rem; }
+.va-sched-sub { font-size:0.82rem; color:var(--muted); margin-bottom:1.4rem; line-height:1.5; }
+.va-cal-btn {
+  display:inline-flex; align-items:center; gap:0.6rem;
+  background:var(--gold); color:var(--navy);
+  padding:0.85rem 1.6rem; font-size:0.82rem; font-weight:600;
+  letter-spacing:0.08em; text-transform:uppercase; text-decoration:none;
+  transition:all 0.25s; width:100%; justify-content:center;
+  border:none; cursor:pointer;
+}
+.va-cal-btn:hover { background:var(--gold-light); }
+.va-cal-btn svg { width:16px; height:16px; }
+.va-summary {
+  margin-top:1rem; padding:0.8rem 1rem;
+  border:1px solid rgba(201,168,76,0.15);
+  background:rgba(23,45,79,0.3);
+  font-size:0.76rem; color:var(--muted); text-align:left; line-height:1.7;
+}
+.va-summary-title { font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); margin-bottom:0.4rem; }
+
+#va-next-btn {
+  margin-top:1rem; width:100%; padding:0.72rem;
+  background:transparent; border:1px solid rgba(201,168,76,0.35);
+  color:var(--gold); font-size:0.78rem; letter-spacing:0.08em;
+  text-transform:uppercase; cursor:pointer; transition:all 0.2s;
+  display:none;
+}
+#va-next-btn:hover { background:rgba(201,168,76,0.1); border-color:var(--gold); }
+#va-next-btn.show { display:block; }
+
+/* Cal.com inline embed */
+#va-step-sched { text-align:center; padding-bottom:0; }
+#va-cal-embed-wrap {
+  width:calc(100% + 2.8rem); /* bleed past body padding */
+  margin:0 -1.4rem -1rem;
+  height:420px;
+  background:var(--navy);
+  overflow:hidden;
+}
+#va-cal-embed-wrap iframe {
+  width:100%; height:100%; border:none;
+  background:transparent;
+}
+@media(max-width:500px) {
+  #va-cal-embed-wrap { height:380px; }
+}
 
 /* ─── FEE-ONLY / WHY WE'RE DIFFERENT ─── */
 .fee-only-grid {
@@ -1206,7 +1386,7 @@ footer { background:#050c18; border-top:1px solid rgba(201,168,76,0.1); padding:
   <a href="#services" onclick="closeMobile()">Services</a>
   <a href="#cases" onclick="closeMobile()">Results</a>
   <a href="#about-section" onclick="closeMobile()">About</a>
-  <a href="#contact-section" onclick="closeMobile()" style="color:var(--gold)">Schedule Consultation</a>
+  <a href="schedule.html" style="color:var(--gold)">Schedule Consultation</a>
 </div>
 
 <!-- NAV -->
@@ -1220,7 +1400,7 @@ footer { background:#050c18; border-top:1px solid rgba(201,168,76,0.1); padding:
     <li><a href="#about-section">About</a></li>
     <li><a href="#resources">Insights</a></li>
   </ul>
-  <a href="#contact-section" class="nav-cta">Schedule Consultation</a>
+  <a href="schedule.html" class="nav-cta">Schedule Consultation</a>
   <div class="nav-hamburger" id="hamburger" role="button" aria-label="Open menu">
     <span></span><span></span><span></span>
   </div>
@@ -1245,7 +1425,7 @@ footer { background:#050c18; border-top:1px solid rgba(201,168,76,0.1); padding:
     </h1>
     <p class="hero-sub-text" itemprop="description">We help senior executives turn accumulated wealth into tax-efficient retirement income plans — so you can retire sooner, spend more confidently, and pay less in taxes over your lifetime.</p>
     <div class="hero-actions">
-      <a href="#contact-section" class="btn-gold" aria-label="Schedule a retirement planning consultation">Schedule Your Consultation</a>
+      <a href="schedule.html" class="btn-gold" aria-label="Schedule a retirement planning consultation">Schedule Your Consultation</a>
       <a href="#roadmap-section" class="btn-outline" aria-label="Learn about our Retirement Income Roadmap process">View the Roadmap</a>
     </div>
     <div class="hero-trust" aria-label="Trust indicators">
@@ -1491,7 +1671,7 @@ footer { background:#050c18; border-top:1px solid rgba(201,168,76,0.1); padding:
             <h3 class="qr-headline" id="qr-headline"></h3>
             <p class="qr-body" id="qr-body"></p>
             <div class="qr-opportunities" id="qr-opportunities"></div>
-            <a href="#contact-section" class="btn-gold" style="margin-top:1.5rem;display:inline-block;" onclick="closeMobile()">Schedule Your Free Consultation →</a>
+            <a href="schedule.html" class="btn-gold" style="margin-top:1.5rem;display:inline-block;" onclick="closeMobile()">Schedule Your Free Consultation →</a>
           </div>
         </div>
       </div>
@@ -1564,19 +1744,125 @@ footer { background:#050c18; border-top:1px solid rgba(201,168,76,0.1); padding:
         <div class="comp-cell comp-with" role="cell"><span class="comp-good" style="font-size:1.05rem; font-weight:500;">$250K–$600K+ in additional after-tax wealth</span></div>
       </div>
     </div>
-    <p class="comparison-note">Estimates illustrative based on typical client profiles. Individual outcomes vary. <a href="#contact-section" style="color:var(--gold);">Request a personalized analysis →</a></p>
+    <p class="comparison-note">Estimates illustrative based on typical client profiles. Individual outcomes vary. <a href="schedule.html" style="color:var(--gold);">Request a personalized analysis →</a></p>
   </div>
 </section>
 
 <!-- FLOATING STICKY CTA -->
-<div id="floating-cta" aria-label="Schedule consultation" role="complementary">
-  <div class="fcta-inner">
-    <div class="fcta-text">
-      <div class="fcta-title">Ready to Build Your Roadmap?</div>
-      <div class="fcta-sub">Complimentary 45-min consultation</div>
+<!-- ═══════════════ VIDEO WIDGET ═══════════════ -->
+<!-- Bubble trigger -->
+<div id="va-bubble" role="button" aria-label="Talk to us" tabindex="0">
+  <video src="video.mp4" autoplay muted loop playsinline></video>
+</div>
+<div id="va-bubble-label">See How We Can Help</div>
+
+<!-- Slide-up panel (centered above bubble) -->
+<div id="va-panel" role="dialog" aria-modal="true" aria-label="Quick qualifier">
+
+  <!-- Video header -->
+  <div id="va-video-wrap">
+    <video id="va-panel-video" src="video.mp4" loop playsinline></video>
+    <div id="va-video-overlay"></div>
+
+    <!-- Top bar: name + minimize + close -->
+    <div id="va-panel-header">
+      <div class="va-header-left">Meridian Retirement Advisors</div>
+      <div class="va-header-btns">
+        <!-- Minimize (down arrow) -->
+        <button class="va-icon-btn" id="va-minimize" aria-label="Minimize">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <!-- Close -->
+        <button class="va-icon-btn" id="va-close" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
     </div>
-    <a href="#contact-section" class="btn-gold fcta-btn">Schedule Now</a>
-    <button class="fcta-close" id="fcta-close" aria-label="Dismiss">✕</button>
+
+    <!-- Mute / Unmute bottom-left -->
+    <button id="va-mute-btn" aria-label="Toggle mute">
+      <!-- Speaker with X (muted state — shown when muted) -->
+      <svg id="va-icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+        <line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+      </svg>
+      <!-- Speaker with waves (unmuted state) -->
+      <svg id="va-icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+      </svg>
+      <span id="va-mute-label">Unmute</span>
+    </button>
+
+    <!-- Play button (shown when paused) -->
+    <button id="va-play-btn" aria-label="Play video">
+      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+  </div>
+
+  <!-- Body -->
+  <div id="va-body">
+
+    <!-- Progress dots -->
+    <div class="va-dots">
+      <div class="va-dot active" data-dot="1"></div>
+      <div class="va-dot" data-dot="2"></div>
+      <div class="va-dot" data-dot="3"></div>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="va-step active" id="va-step-1">
+      <div class="va-q-label">Question 1 of 3</div>
+      <div class="va-q-text">How close are you to retirement?</div>
+      <div class="va-choices">
+        <button class="va-choice" onclick="vaSelect(1,this)">Within 1–2 years</button>
+        <button class="va-choice" onclick="vaSelect(1,this)">3–5 years away</button>
+        <button class="va-choice" onclick="vaSelect(1,this)">5–10 years away</button>
+        <button class="va-choice" onclick="vaSelect(1,this)">Just exploring for now</button>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="va-step" id="va-step-2">
+      <div class="va-q-label">Question 2 of 3</div>
+      <div class="va-q-text">What's your biggest retirement concern right now?</div>
+      <div class="va-choices">
+        <button class="va-choice" onclick="vaSelect(2,this)">Paying too much in taxes</button>
+        <button class="va-choice" onclick="vaSelect(2,this)">Running out of money</button>
+        <button class="va-choice" onclick="vaSelect(2,this)">Figuring out when I can retire</button>
+        <button class="va-choice" onclick="vaSelect(2,this)">Managing RMDs & Social Security</button>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="va-step" id="va-step-3">
+      <div class="va-q-label">Question 3 of 3</div>
+      <div class="va-q-text">Roughly how much do you have in retirement savings today?</div>
+      <div class="va-choices">
+        <button class="va-choice" onclick="vaSelect(3,this)">Under $500K</button>
+        <button class="va-choice" onclick="vaSelect(3,this)">$500K – $1M</button>
+        <button class="va-choice" onclick="vaSelect(3,this)">$1M – $3M</button>
+        <button class="va-choice" onclick="vaSelect(3,this)">$3M+</button>
+      </div>
+    </div>
+
+    <!-- Schedule step -->
+    <div class="va-step" id="va-step-sched">
+      <div class="va-sched-icon">📅</div>
+      <div class="va-sched-title">Let's Build Your Roadmap</div>
+      <div class="va-sched-sub">Based on your answers, a 30-minute complimentary strategy call is the right next step.</div>
+      <div class="va-summary" id="va-answers-summary" style="margin-bottom:1.2rem;text-align:left;">
+        <div class="va-summary-title">Your Answers</div>
+        <div id="va-summary-list"></div>
+      </div>
+      <a href="schedule.html" class="va-cal-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Schedule My Free Call →
+      </a>
+      <p style="font-size:0.72rem;color:var(--muted);margin-top:0.8rem;text-align:center;">Opens our calendar — pick a time in seconds.</p>
+    </div>
+
+    <button id="va-next-btn" onclick="vaNext()">Next →</button>
   </div>
 </div>
 
@@ -2278,7 +2564,7 @@ footer { background:#050c18; border-top:1px solid rgba(201,168,76,0.1); padding:
   <h2 class="reveal">Ready to Build Your<br><em>Retirement Income Roadmap?</em></h2>
   <p class="reveal">A complimentary 45-minute consultation to assess your retirement readiness and identify your highest-value planning opportunities.</p>
   <div class="cta-actions reveal">
-    <a href="#contact-section" class="btn-gold">Schedule Your Consultation</a>
+    <a href="schedule.html" class="btn-gold">Schedule Your Consultation</a>
     <a href="#resources" class="btn-outline">Explore the Knowledge Center</a>
   </div>
   <p class="cta-note reveal">No sales pitch. No product recommendations. A genuine conversation about your retirement readiness.</p>
@@ -2288,82 +2574,22 @@ footer { background:#050c18; border-top:1px solid rgba(201,168,76,0.1); padding:
 <section class="section section-dark" id="contact-section">
   <div class="section-header">
     <div class="eyebrow reveal"><span class="eyebrow-line"></span> Begin Your Engagement</div>
-    <h2 class="section-title reveal">Schedule a <em>Consultation</em></h2>
+    <h2 class="section-title reveal">Schedule a <em>Free Consultation</em></h2>
+    <p class="section-sub reveal">A focused 30-minute conversation — not a sales call. We'll assess your retirement readiness and identify your biggest tax planning opportunities.</p>
   </div>
-  <div class="contact-grid">
-    <div class="contact-intro reveal-left">
-      <h3>A Private, Confidential Strategic Conversation</h3>
-      <p>Our initial consultation is a focused 45-minute conversation — not a sales call. We'll assess your retirement readiness, identify your most significant tax planning opportunities, and determine whether a full Retirement Income Roadmap engagement makes sense for your situation.</p>
-      <ul class="contact-checklist">
-        <li><span class="check-icon">→</span> Complimentary 45-minute retirement readiness assessment</li>
-        <li><span class="check-icon">→</span> Fiduciary advice — no products, no commissions, no conflicts</li>
-        <li><span class="check-icon">→</span> Complete confidentiality and data security</li>
-        <li><span class="check-icon">→</span> Best suited for households with $1M–$10M+ in investable assets</li>
-        <li><span class="check-icon">→</span> We work with a limited number of clients annually to ensure quality</li>
-      </ul>
-      <div class="contact-disclaimer">
-        <strong style="font-size:0.75rem; color:var(--text-light); display:block; margin-bottom:0.4rem;">Privacy Commitment</strong>
-        Your information is kept strictly confidential, used only to prepare for our conversation, and never shared with or sold to any third party.
-      </div>
-    </div>
-    <div class="reveal-right">
-      <div class="form-wrap">
-        <div class="form-title">Request Your Consultation</div>
-        <form onsubmit="handleSubmit(event)">
-          <div class="frow">
-            <div class="fgrp">
-              <label class="flabel">First Name</label>
-              <input type="text" class="finput" placeholder="James" required>
-            </div>
-            <div class="fgrp">
-              <label class="flabel">Last Name</label>
-              <input type="text" class="finput" placeholder="Harrison" required>
-            </div>
-          </div>
-          <div class="fgrp">
-            <label class="flabel">Email Address</label>
-            <input type="email" class="finput" placeholder="j.harrison@company.com" required>
-          </div>
-          <div class="fgrp">
-            <label class="flabel">Current Title / Role</label>
-            <input type="text" class="finput" placeholder="CFO, Managing Director, Business Owner...">
-          </div>
-          <div class="frow">
-            <div class="fgrp">
-              <label class="flabel">Investable Assets</label>
-              <select class="fselect finput">
-                <option value="">Select range</option>
-                <option>$500K – $1M</option>
-                <option>$1M – $3M</option>
-                <option>$3M – $5M</option>
-                <option>$5M – $10M</option>
-                <option>$10M+</option>
-              </select>
-            </div>
-            <div class="fgrp">
-              <label class="flabel">Target Retirement</label>
-              <select class="fselect finput">
-                <option value="">Select timeline</option>
-                <option>Within 1–2 years</option>
-                <option>3–5 years</option>
-                <option>5–10 years</option>
-                <option>10+ years</option>
-              </select>
-            </div>
-          </div>
-          <div class="fgrp">
-            <label class="flabel">Primary Retirement Planning Challenge (Optional)</label>
-            <textarea class="ftextarea" placeholder="What's the most pressing retirement planning question or concern you'd like to address?"></textarea>
-          </div>
-          <button type="submit" class="btn-gold fsubmit" id="submit-btn">Request Consultation</button>
-          <p class="fprivacy">By submitting, you agree to our privacy policy. We will never sell or share your information.</p>
-        </form>
-        <div id="form-success" style="display:none; text-align:center; padding:3rem 1rem;">
-          <div style="font-size:2rem; margin-bottom:1rem;">✓</div>
-          <div style="font-family:var(--font-serif); font-size:1.4rem; margin-bottom:0.5rem;">Request Received</div>
-          <p style="font-size:0.85rem; color:var(--muted);">We'll be in touch within one business day to schedule your consultation.</p>
-        </div>
-      </div>
+  <div style="max-width:680px;margin:0 auto;text-align:center;">
+    <ul class="contact-checklist reveal" style="text-align:left;display:inline-block;margin-bottom:2.5rem;">
+      <li><span class="check-icon">→</span> Complimentary 30-minute retirement readiness assessment</li>
+      <li><span class="check-icon">→</span> Fiduciary advice — no products, no commissions, no conflicts</li>
+      <li><span class="check-icon">→</span> Complete confidentiality and data security</li>
+      <li><span class="check-icon">→</span> Best suited for households with $1M–$10M+ in investable assets</li>
+    </ul>
+    <div class="reveal">
+      <a href="schedule.html" class="btn-gold" style="font-size:1rem;padding:1.1rem 2.8rem;display:inline-flex;align-items:center;gap:0.7rem;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Schedule Your Free Call
+      </a>
+      <p style="font-size:0.78rem;color:var(--muted);margin-top:1rem;">Opens our calendar — pick a time that works for you. No forms, no waiting.</p>
     </div>
   </div>
 </section>
@@ -2602,7 +2828,7 @@ footer { background:#050c18; border-top:1px solid rgba(201,168,76,0.1); padding:
     <article class="gloss-card reveal" itemscope itemtype="https://schema.org/DefinedTerm">
       <h3 class="gloss-term" itemprop="name">Retirement Income Roadmap</h3>
       <p class="gloss-def" itemprop="description">A comprehensive, personalized financial plan encompassing every dimension of the transition from wealth accumulation to retirement income distribution. A Retirement Income Roadmap integrates income stream analysis, tax optimization strategy, withdrawal sequencing, Social Security planning, healthcare coverage, RMD management, and legacy coordination into a single coherent strategy tailored to the individual executive's specific financial architecture, tax situation, and life goals.</p>
-      <div class="gloss-related">Related: <a href="#roadmap-section">Our Process</a> · <a href="#contact-section">Schedule Consultation</a></div>
+      <div class="gloss-related">Related: <a href="#roadmap-section">Our Process</a> · <a href="schedule.html">Schedule Consultation</a></div>
     </article>
 
     <article class="gloss-card reveal" itemscope itemtype="https://schema.org/DefinedTerm">
@@ -2698,7 +2924,7 @@ footer { background:#050c18; border-top:1px solid rgba(201,168,76,0.1); padding:
         <meta itemprop="position" content="2">
       </li>
       <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <a href="#contact-section" itemprop="item"><span itemprop="name">Schedule Consultation</span></a>
+        <a href="schedule.html" itemprop="item"><span itemprop="name">Schedule Consultation</span></a>
         <meta itemprop="position" content="3">
       </li>
     </ol>
@@ -2747,7 +2973,7 @@ footer { background:#050c18; border-top:1px solid rgba(201,168,76,0.1); padding:
         <li><a href="#cases">Client Results</a></li>
         <li><a href="#testimonials">Client Perspectives</a></li>
         <li><a href="#faq">FAQs</a></li>
-        <li><a href="#contact-section">Schedule Consultation</a></li>
+        <li><a href="schedule.html">Schedule Consultation</a></li>
       </ul>
     </div>
   </div>
@@ -2767,7 +2993,7 @@ footer { background:#050c18; border-top:1px solid rgba(201,168,76,0.1); padding:
       <a href="#faq">FAQ</a>
       <a href="#glossary">Glossary</a>
       <a href="#authority-content">Planning Insights</a>
-      <a href="#contact-section">Schedule Consultation</a>
+      <a href="schedule.html">Schedule Consultation</a>
     </div>
   </div>
   <div class="footer-bottom">
@@ -3214,33 +3440,116 @@ function handleGuideSubmit(e) {
   gsap.from('#guide-success', { opacity:0, y:10, duration:0.5, ease:'power2.out' });
 }
 
-/* ── FLOATING CTA ── */
+/* ── VIDEO WIDGET ── */
 (function() {
-  const fcta = document.getElementById('floating-cta');
-  const closeBtn = document.getElementById('fcta-close');
-  let dismissed = false;
-  let shown = false;
-  window.addEventListener('scroll', () => {
-    if (dismissed) return;
-    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-    if (pct > 0.25 && !shown) {
-      shown = true;
-      setTimeout(() => fcta.classList.add('visible'), 400);
+  const bubble     = document.getElementById('va-bubble');
+  const label      = document.getElementById('va-bubble-label');
+  const panel      = document.getElementById('va-panel');
+  const closeBtn   = document.getElementById('va-close');
+  const minimizeBtn= document.getElementById('va-minimize');
+  const playBtn    = document.getElementById('va-play-btn');
+  const muteBtn    = document.getElementById('va-mute-btn');
+  const panelVid   = document.getElementById('va-panel-video');
+  const iconMuted  = document.getElementById('va-icon-muted');
+  const iconSound  = document.getElementById('va-icon-sound');
+  const muteLabel  = document.getElementById('va-mute-label');
+  let currentStep  = 1;
+  const answers    = {};
+  let isMuted      = true; // video starts muted, user can unmute
+
+  // ── Open/close/minimize ──
+  function openPanel() {
+    panel.classList.add('open');
+    panel.classList.remove('minimized');
+    label.classList.remove('show');
+    panelVid.muted = isMuted;
+    panelVid.play().catch(()=>{});
+    playBtn.classList.add('playing');
+  }
+  function closePanel() {
+    panel.classList.remove('open');
+    panelVid.pause();
+  }
+  function minimizePanel() {
+    panel.classList.remove('open');
+    panelVid.pause();
+    // Show bubble label hint to reopen
+    label.classList.add('show');
+    setTimeout(() => label.classList.remove('show'), 4000);
+  }
+
+  // Auto-open after 1.5s on load
+  window.addEventListener('load', () => {
+    setTimeout(openPanel, 1500);
+  });
+
+  bubble.addEventListener('click', openPanel);
+  bubble.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openPanel(); });
+  closeBtn.addEventListener('click', closePanel);
+  minimizeBtn.addEventListener('click', minimizePanel);
+
+  // ── Mute / Unmute ──
+  function updateMuteUI() {
+    panelVid.muted = isMuted;
+    if (isMuted) {
+      iconMuted.style.display = '';
+      iconSound.style.display = 'none';
+      muteLabel.textContent = 'Unmute';
+    } else {
+      iconMuted.style.display = 'none';
+      iconSound.style.display = '';
+      muteLabel.textContent = 'Mute';
     }
-    // Hide near contact form
-    const contact = document.getElementById('contact-section');
-    if (contact) {
-      const rect = contact.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.8) {
-        fcta.classList.remove('visible');
-      } else if (shown && !dismissed) {
-        fcta.classList.add('visible');
-      }
+  }
+  muteBtn.addEventListener('click', () => {
+    isMuted = !isMuted;
+    updateMuteUI();
+  });
+  updateMuteUI();
+
+  // ── Play/pause toggle ──
+  playBtn.addEventListener('click', () => {
+    panelVid.play().catch(()=>{});
+    playBtn.classList.add('playing');
+  });
+  panelVid.addEventListener('pause', () => { playBtn.classList.remove('playing'); });
+  panelVid.addEventListener('play',  () => { playBtn.classList.add('playing'); });
+
+  // ── Answer selection ──
+  window.vaSelect = function(stepNum, btn) {
+    btn.closest('.va-choices').querySelectorAll('.va-choice').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    answers[stepNum] = btn.textContent.trim();
+    const nextBtn = document.getElementById('va-next-btn');
+    nextBtn.classList.add('show');
+    setTimeout(() => vaNext(), 420);
+  };
+
+  window.vaNext = function() {
+    if (!answers[currentStep]) return;
+    const nextBtn = document.getElementById('va-next-btn');
+    nextBtn.classList.remove('show');
+
+    document.getElementById('va-step-' + currentStep)?.classList.remove('active');
+    currentStep++;
+
+    document.querySelectorAll('.va-dot').forEach(d => {
+      const n = parseInt(d.dataset.dot);
+      d.classList.toggle('done', n < currentStep);
+      d.classList.toggle('active', n === currentStep);
+    });
+
+    if (currentStep > 3) {
+      const summaryEl = document.getElementById('va-summary-list');
+      summaryEl.innerHTML = [
+        `⏱ <strong>${answers[1]}</strong>`,
+        `🎯 <strong>${answers[2]}</strong>`,
+        `💰 <strong>${answers[3]}</strong>`
+      ].map(s => `<div style="margin:0.2rem 0;">${s}</div>`).join('');
+      document.getElementById('va-step-sched').classList.add('active');
+    } else {
+      document.getElementById('va-step-' + currentStep)?.classList.add('active');
     }
-  }, { passive:true });
-  closeBtn.onclick = () => {
-    dismissed = true;
-    fcta.classList.remove('visible');
   };
 })();
 
