@@ -3944,7 +3944,7 @@
 
       <!-- Video header -->
       <div id="va-video-wrap">
-        <video id="va-panel-video" src="https://pub-660239990c604f1d90deecacd9c376b7.r2.dev/video.mp4" loop playsinline
+        <video id="va-panel-video" src="https://pub-660239990c604f1d90deecacd9c376b7.r2.dev/video.mp4" muted loop playsinline
           preload="metadata"></video>
         <div id="va-video-overlay"></div>
 
@@ -6022,25 +6022,8 @@
         }
       }
 
-      function autoUnmuteVideo() {
-        isMuted = false;
-        updateMuteUI();
-
-        if (panel.classList.contains('open')) {
-          const playback = panelVid.play();
-          if (playback) {
-            playback.catch(() => {
-              // Browsers may require a user gesture before allowing audio.
-              isMuted = true;
-              updateMuteUI();
-            });
-          }
-        }
-      }
-
       window.addEventListener('load', () => {
         openPanel();
-        autoUnmuteVideo();
       });
 
       muteBtn.addEventListener('click', () => {
