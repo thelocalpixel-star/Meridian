@@ -3460,24 +3460,27 @@
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
     <button class="mobile-close" id="mobileClose">✕</button>
-    <a href="#problem" onclick="closeMobile()">The Challenge</a>
     <a href="#roadmap-section" onclick="closeMobile()">Our Process</a>
     <a href="#services" onclick="closeMobile()">Services</a>
     <a href="#cases" onclick="closeMobile()">Results</a>
     <a href="#about-section" onclick="closeMobile()">About</a>
+    <a href="blogs.html" onclick="closeMobile()">Blogs</a>
+    <a href="https://thefinancialhq.com/comra-RRE" target="_blank" rel="noopener">Risk Analysis</a>
+    <a href="https://www.youtube.com/@RetirementRoadmapExperts" target="_blank" rel="noopener">YouTube / Podcast</a>
     <a href="schedule.html" style="color:var(--gold)">Schedule Consultation</a>
   </div>
 
   <!-- NAV -->
   <nav id="nav">
-    <a href="#" class="nav-logo">Retirement Roadmap Experts</a>
+    <a href="index.html" class="nav-logo">Retirement Roadmap Experts</a>
     <ul class="nav-links">
-      <li><a href="#problem">Challenge</a></li>
       <li><a href="#roadmap-section">Process</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#cases">Results</a></li>
       <li><a href="#about-section">About</a></li>
-      <li><a href="#resources">Insights</a></li>
+      <li><a href="blogs.html">Blogs</a></li>
+      <li><a href="https://thefinancialhq.com/comra-RRE" target="_blank" rel="noopener">Risk Analysis</a></li>
+      <li><a href="https://www.youtube.com/@RetirementRoadmapExperts" target="_blank" rel="noopener">Podcast</a></li>
     </ul>
     <a href="schedule.html" class="nav-cta">Schedule Consultation</a>
     <div class="nav-hamburger" id="hamburger" role="button" aria-label="Open menu">
@@ -3835,10 +3838,10 @@
           </div>
           <div class="comp-row comp-total reveal" role="row">
             <div class="comp-cell comp-topic" role="cell"><strong>Estimated Lifetime Difference</strong></div>
-            <div class="comp-cell comp-without" role="cell"><span class="comp-bad" style="font-size:1.05rem;">$0 in
+            <div class="comp-cell comp-without" role="cell"><span class="comp-bad">$0 in
                 optimized outcomes</span></div>
-            <div class="comp-cell comp-with" role="cell"><span class="comp-good"
-                style="font-size:1.05rem; font-weight:500;">$250K–$600K+ in additional after-tax wealth</span></div>
+            <div class="comp-cell comp-with" role="cell"><span class="comp-good">$250K–$600K+ in additional
+                after-tax wealth</span></div>
           </div>
         </div>
         <p class="comparison-note">Estimates illustrative based on typical client profiles. Individual outcomes vary. <a
@@ -3994,14 +3997,14 @@
         <div class="eyebrow reveal"><span class="eyebrow-line"></span> The Challenge</div>
         <h2 class="section-title reveal" id="problem-heading">Your portfolio was
           built to grow.<br>Now it has to pay you for <em>thirty years.</em></h2>
-        <p class="section-sub reveal">Most advisors manage
-          investments. We build retirement
-          income plans — the tax sequencing,
-          withdrawal order, Social Security
-          timing, and income floor decisions that
-          determine whether your accumulated
-          wealth actually carries you and your
-          spouse through retirement.
+        <p class="section-sub reveal"><span style="display:block; margin-bottom:1.35rem;">Most advisors manage
+            investments.</span><span style="display:block;">We build retirement
+            income plans — the tax sequencing,
+            withdrawal order, Social Security
+            timing, and income floor decisions that
+            determine whether your accumulated
+            wealth actually carries you and your
+            spouse through retirement.</span>
         </p>
       </div>
       <div class="problems-grid">
@@ -4578,7 +4581,7 @@
       <div class="about-grid">
         <div class="about-portrait-wrap reveal-left">
           <div class="about-portrait">
-            <img src="founder.png" alt="Robert Boeck, Founder of Retirement Roadmap Experts" loading="lazy"
+            <img src="assets/images/founder.png" alt="Robert Boeck, Founder of Retirement Roadmap Experts" loading="lazy"
               decoding="async">
             <div class="portrait-inner">
               <div class="portrait-name">Robert Boeck</div>
@@ -4618,7 +4621,7 @@
         <p class="section-sub reveal">In-depth analysis on the planning topics that matter most to senior executives and
           high-income professionals navigating the transition to retirement.</p>
       </div>
-      <div class="resources-grid">
+      <div class="resources-grid" hidden aria-hidden="true">
         <div class="res-card reveal" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
           <meta itemprop="author" content="Robert Boeck, CFP®">
           <meta itemprop="datePublished" content="2025-01-01">
@@ -4699,6 +4702,110 @@
           <div class="res-footer"><span>7 min read</span><span class="res-read">Read Article →</span></div>
         </div>
       </div>
+      <style>
+        .blog-index-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1.35rem;
+          max-width: 1200px;
+          margin: 0 auto
+        }
+
+        .blog-index-card {
+          display: flex;
+          flex-direction: column;
+          background: #0b1930;
+          border: 1px solid rgba(201, 168, 76, .24);
+          color: inherit;
+          text-decoration: none;
+          transition: transform .25s, border-color .25s, box-shadow .25s;
+          overflow: hidden
+        }
+
+        .blog-index-card:hover {
+          transform: translateY(-7px);
+          border-color: var(--gold);
+          box-shadow: 0 22px 50px rgba(0, 0, 0, .2)
+        }
+
+        .blog-index-card img {
+          width: 100%;
+          aspect-ratio: 16/9;
+          object-fit: cover
+        }
+
+        .blog-index-copy {
+          padding: 1.5rem;
+          display: flex;
+          flex-direction: column;
+          flex: 1
+        }
+
+        .blog-index-copy h3 {
+          font-family: var(--serif);
+          font-size: 1.75rem;
+          font-weight: 400;
+          line-height: 1.08;
+          color: var(--white);
+          margin: .7rem 0
+        }
+
+        .blog-index-copy p {
+          color: var(--muted);
+          font-size: .88rem;
+          line-height: 1.65
+        }
+
+        .blog-index-more {
+          display: flex;
+          justify-content: center;
+          margin-top: 2rem
+        }
+
+        .blog-index-copy .res-read {
+          margin-top: auto;
+          padding-top: 1rem
+        }
+
+        @media(max-width:850px) {
+          .blog-index-grid {
+            grid-template-columns: 1fr 1fr
+          }
+        }
+
+        @media(max-width:580px) {
+          .blog-index-grid {
+            grid-template-columns: 1fr
+          }
+        }
+      </style>
+      <div class="blog-index-grid">
+        <a class="blog-index-card reveal" href="blog/ai-and-retirement-planning.html"><img src="assets/images/blog/image1.jpg"
+            alt="Artificial intelligence and retirement planning" loading="lazy">
+          <div class="blog-index-copy"><span class="res-cat">Retirement Planning</span>
+            <h3>AI and Retirement Planning</h3>
+            <p>What AI-driven wealth management reveals about investment management versus a written retirement income
+              plan.</p><span class="res-read">Read insight →</span>
+          </div>
+        </a>
+        <a class="blog-index-card reveal" href="blog/127k-more-social-security-income.html"><img
+            src="assets/images/blog/image6.jpg" alt="Social Security planning information" loading="lazy">
+          <div class="blog-index-copy"><span class="res-cat">Social Security</span>
+            <h3>We Found $127K More Social Security Income</h3>
+            <p>How coordinated household modeling can change a permanent claiming decision.</p><span
+              class="res-read">Read insight →</span>
+          </div>
+        </a>
+        <a class="blog-index-card reveal" href="blog/compare-retirement-income-strategies.html"><img
+            src="assets/images/blog/image7.jpeg" alt="Retirement withdrawal sequencing schedule" loading="lazy">
+          <div class="blog-index-copy"><span class="res-cat">Income Strategy</span>
+            <h3>Let’s Compare Retirement Income Strategies</h3>
+            <p>The order in which accounts fund retirement can matter as much as what you own.</p><span
+              class="res-read">Read insight →</span>
+          </div>
+        </a>
+      </div>
+      <div class="blog-index-more"><a class="btn-outline" href="blogs.html">Explore All 8 Insights →</a></div>
     </section>
 
     <!-- ═══════════════ LEAD MAGNET ═══════════════ -->
@@ -5036,8 +5143,9 @@
               <p>Retirement Roadmap Experts
                 differs from traditional financial advisors in four fundamental ways:</p>
               <ul class="faq-list">
-                <li><strong>Exclusive retirement income focus:</strong> We do not offer general investment management or
-                  accumulation planning. Every engagement focuses specifically on the complex transition from wealth
+                <li><strong>Exclusive retirement income focus:</strong> While we do offer general investment management
+                  and accumulation
+                  planning, our engagement focuses on the complex transition from wealth
                   accumulation to tax-efficient retirement income distribution — the phase most advisors are least
                   equipped to handle.</li>
                 <li><strong>Deep tax integration:</strong> Retirement income planning without tax planning is
@@ -5318,9 +5426,10 @@
           <a href="https://linkedin.com" aria-label="LinkedIn"
             style="color:var(--muted); font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; transition:color 0.2s; text-decoration:none;">LinkedIn</a>
           <span style="color:rgba(255,255,255,0.1)">|</span>
-          <a href="https://twitter.com" aria-label="Twitter / X"
-            style="color:var(--muted); font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; transition:color 0.2s; text-decoration:none;">Twitter
-            / X</a>
+          <a href="https://www.youtube.com/@RetirementRoadmapExperts" target="_blank" rel="noopener"
+            aria-label="Retirement Roadmap Experts YouTube channel and podcast"
+            style="color:var(--muted); font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; transition:color 0.2s; text-decoration:none;">YouTube
+            / Podcast</a>
         </div>
       </div>
       <div class="footer-col">
@@ -5339,7 +5448,7 @@
       <div class="footer-col">
         <h4>Learn</h4>
         <ul>
-          <li><a href="#resources">Retirement Tax Strategies</a></li>
+          <li><a href="blogs.html">All Articles &amp; Insights</a></li>
           <li><a href="#resources">Roth Conversion Guide</a></li>
           <li><a href="#resources">Early Retirement Planning</a></li>
           <li><a href="#resources">Executive Retirement</a></li>
@@ -5373,7 +5482,9 @@
         <a href="#cases">Case Studies</a>
         <a href="#testimonials">Client Testimonials</a>
         <a href="#about-section">About</a>
-        <a href="#resources">Articles &amp; Insights</a>
+        <a href="blogs.html">Articles &amp; Insights</a>
+        <a href="https://thefinancialhq.com/comra-RRE" target="_blank" rel="noopener">Risk Analysis Questionnaire</a>
+        <a href="https://www.youtube.com/@RetirementRoadmapExperts" target="_blank" rel="noopener">YouTube / Podcast</a>
         <a href="#faq">FAQ</a>
         <a href="#glossary">Glossary</a>
         <a href="#authority-content">Planning Insights</a>
