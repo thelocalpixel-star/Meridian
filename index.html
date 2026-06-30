@@ -3460,13 +3460,11 @@
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
     <button class="mobile-close" id="mobileClose">✕</button>
-    <a href="#roadmap-section" onclick="closeMobile()">Our Process</a>
     <a href="#services" onclick="closeMobile()">Services</a>
     <a href="#cases" onclick="closeMobile()">Results</a>
     <a href="#about-section" onclick="closeMobile()">About</a>
     <a href="blogs.html" onclick="closeMobile()">Blogs</a>
     <a href="https://thefinancialhq.com/comra-RRE" target="_blank" rel="noopener">Risk Analysis</a>
-    <a href="https://www.youtube.com/@RetirementRoadmapExperts" target="_blank" rel="noopener">YouTube / Podcast</a>
     <a href="schedule.html" style="color:var(--gold)">Schedule Consultation</a>
   </div>
 
@@ -3474,13 +3472,11 @@
   <nav id="nav">
     <a href="index.html" class="nav-logo">Retirement Roadmap Experts</a>
     <ul class="nav-links">
-      <li><a href="#roadmap-section">Process</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#cases">Results</a></li>
       <li><a href="#about-section">About</a></li>
       <li><a href="blogs.html">Blogs</a></li>
       <li><a href="https://thefinancialhq.com/comra-RRE" target="_blank" rel="noopener">Risk Analysis</a></li>
-      <li><a href="https://www.youtube.com/@RetirementRoadmapExperts" target="_blank" rel="noopener">Podcast</a></li>
     </ul>
     <a href="schedule.html" class="nav-cta">Schedule Consultation</a>
     <div class="nav-hamburger" id="hamburger" role="button" aria-label="Open menu">
@@ -4780,11 +4776,11 @@
         }
       </style>
       <div class="blog-index-grid">
-        <a class="blog-index-card reveal" href="blog/ai-and-retirement-planning.html"><img src="assets/images/blog/image1.jpg"
-            alt="Artificial intelligence and retirement planning" loading="lazy">
-          <div class="blog-index-copy"><span class="res-cat">Retirement Planning</span>
-            <h3>AI and Retirement Planning</h3>
-            <p>What AI-driven wealth management reveals about investment management versus a written retirement income
+        <a class="blog-index-card reveal" href="blog/retirement-plan-estate-planning-finish-line.html"><img src="assets/images/blog/image1.jpg"
+            alt="Estate planning diagram connecting wills, trusts, probate, and powers of attorney" loading="lazy">
+          <div class="blog-index-copy"><span class="res-cat">Estate Planning</span>
+            <h3>The Retirement Plan You Built Deserves a Finish Line</h3>
+            <p>Why beneficiary designations, trusts, taxes, and attorney coordination belong inside the same retirement
               plan.</p><span class="res-read">Read insight →</span>
           </div>
         </a>
@@ -4805,7 +4801,7 @@
           </div>
         </a>
       </div>
-      <div class="blog-index-more"><a class="btn-outline" href="blogs.html">Explore All 8 Insights →</a></div>
+      <div class="blog-index-more"><a class="btn-outline" href="blogs.html">Explore All 9 Blogs →</a></div>
     </section>
 
     <!-- ═══════════════ LEAD MAGNET ═══════════════ -->
@@ -5876,8 +5872,7 @@
         // Update the mobile menu too
         const mobileMenu = document.getElementById('mobileMenu');
         const extraLinks = [
-          { href: '#faq', label: 'FAQ' },
-          { href: '#glossary', label: 'Glossary' }
+          { href: '#faq', label: 'FAQ' }
         ];
         extraLinks.forEach(({ href, label }) => {
           const li = document.createElement('li');

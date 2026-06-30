@@ -6,7 +6,7 @@ A polished, responsive marketing and education website for Retirement Roadmap Ex
 
 - Conversion-focused homepage with interactive planning content
 - Dedicated scheduling page connected to Google Calendar
-- Search-friendly blog library with eight individual articles
+- Search-friendly blog library with nine individual articles
 - Responsive desktop, tablet, and mobile layouts
 - Structured data, social-sharing metadata, semantic headings, and descriptive image text
 - Cloudflare R2-hosted video with muted inline autoplay support
