@@ -84,7 +84,8 @@ Do not make long-term article edits only in the generated HTML pages; the next g
 | Risk Analysis Questionnaire | [The Financial HQ](https://thefinancialhq.com/comra-RRE) |
 | YouTube and podcast | [Retirement Roadmap Experts](https://www.youtube.com/@RetirementRoadmapExperts) |
 | Homepage video | Cloudflare R2 public asset referenced in `index.html` |
-| Retirement book | Amazon link referenced in `index.html` |
+| Retirement book | Local `book.pdf` download gated by the homepage name/email form; FormSubmit notifies `thelocalpixel@gmail.com` |
+| Retirement book cover | `assets/images/from-accumulation-to-income-cover.jpg` |
 
 External links open in a new tab where appropriate and use `rel="noopener"`.
 
@@ -126,7 +127,7 @@ Before each release:
 1. Test `index.html`, `blogs.html`, one individual article, and `schedule.html`.
 2. Check desktop and mobile navigation.
 3. Confirm images and the R2 video load successfully.
-4. Test the schedule, risk-analysis, YouTube, and book links.
+4. Test the schedule, risk-analysis, YouTube, and book download form.
 5. Confirm the mobile video panel does not open automatically.
 6. Check the browser console for broken resources or JavaScript errors.
 7. Verify generated blog links after running the blog generator.

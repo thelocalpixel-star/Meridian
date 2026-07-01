@@ -3298,112 +3298,119 @@
     /* ─── LEAD MAGNET ─── */
     .guide-wrapper {
       display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 4rem;
+      grid-template-columns: minmax(220px, 320px) 1fr;
+      gap: clamp(2rem, 5vw, 5rem);
       align-items: center;
-      max-width: 900px;
+      max-width: 1120px;
       margin: 0 auto;
-    }
-
-    @media(max-width:700px) {
-      .guide-wrapper {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
+      padding: clamp(1.4rem, 3vw, 2.4rem);
+      border: 1px solid rgba(201, 168, 76, 0.38);
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(201, 168, 76, 0.16), transparent 34%),
+        linear-gradient(135deg, rgba(18, 41, 72, 0.92), rgba(7, 17, 34, 0.92));
+      box-shadow: 0 26px 80px rgba(0, 0, 0, 0.34);
     }
 
     .guide-visual {
       display: flex;
       justify-content: center;
+      perspective: 900px;
     }
 
     .guide-book {
-      width: 160px;
-      height: 210px;
+      width: min(285px, 70vw);
+      aspect-ratio: 0.647;
       position: relative;
-      filter: drop-shadow(-8px 12px 30px rgba(0, 0, 0, 0.6));
+      border-radius: 4px 12px 12px 4px;
+      overflow: hidden;
+      transform: perspective(700px) rotateY(-7deg) rotateX(2deg);
+      filter: drop-shadow(-18px 22px 42px rgba(0, 0, 0, 0.62));
+      box-shadow:
+        inset 12px 0 20px rgba(0, 0, 0, 0.24),
+        0 0 0 1px rgba(255, 255, 255, 0.16),
+        18px 18px 0 rgba(201, 168, 76, 0.12);
     }
 
-    .guide-book-spine {
+    .guide-book::after {
+      content: "";
       position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 20px;
-      background: linear-gradient(180deg, #8a6a20, #c9a84c, #8a6a20);
+      inset: 0;
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0.18), transparent 14%, rgba(255, 255, 255, 0.16) 48%, transparent 62%);
+      pointer-events: none;
     }
 
-    .guide-book-cover {
-      position: absolute;
-      left: 20px;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(145deg, var(--navy-light), var(--navy-mid));
-      border: 1px solid rgba(201, 168, 76, 0.3);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 1.2rem;
-      text-align: center;
-      border-left: none;
-    }
-
-    .guide-book-label {
-      font-size: 0.55rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      background: rgba(201, 168, 76, 0.1);
-      padding: 0.2rem 0.6rem;
-      margin-bottom: 0.8rem;
-    }
-
-    .guide-book-title {
-      font-family: var(--font-serif);
-      font-size: 0.85rem;
-      font-weight: 400;
-      line-height: 1.4;
-      color: var(--white);
-      margin-bottom: 0.8rem;
-    }
-
-    .guide-book-sub {
-      font-size: 0.6rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
+    .guide-book img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .guide-desc {
-      font-size: 0.92rem;
+      font-size: 1rem;
       color: var(--text-light);
       line-height: 1.8;
-      margin: 0.8rem 0 1.3rem;
+      margin: 0.9rem 0 1.5rem;
+      max-width: 680px;
     }
 
-    .guide-contents {
-      list-style: none;
+    .book-proof-panel {
       display: flex;
       flex-direction: column;
-      gap: 0.55rem;
-      margin-bottom: 2rem;
+      gap: 1.1rem;
+      margin: 0 0 1.6rem;
+      padding: clamp(1rem, 2vw, 1.35rem);
+      border: 1px solid rgba(201, 168, 76, 0.28);
+      border-radius: 18px;
+      background: rgba(6, 15, 31, 0.42);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
     }
 
-    .guide-contents li {
-      display: flex;
+    .book-proof-item {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 0.9rem;
       align-items: flex-start;
-      gap: 0.6rem;
-      font-size: 0.85rem;
-      color: var(--muted);
-      line-height: 1.5;
     }
 
-    .gc-check {
-      color: var(--emerald-light);
-      flex-shrink: 0;
-      font-size: 0.8rem;
-      margin-top: 0.15rem;
+    .book-proof-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--navy-deep);
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      font-size: 0.9rem;
+      font-weight: 800;
+      box-shadow: 0 8px 18px rgba(201, 168, 76, 0.2);
+    }
+
+    .book-proof-item h3 {
+      margin: 0 0 0.35rem;
+      font-family: var(--font-sans);
+      font-size: 0.94rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+    }
+
+    .book-proof-item p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 0.92rem;
+    }
+
+    .book-proof-item strong {
+      color: var(--white);
+      font-weight: 700;
+    }
+
+    .book-proof-item em {
+      color: var(--white);
     }
 
     .guide-form-row {
@@ -3417,6 +3424,10 @@
       min-width: 200px;
     }
 
+    .guide-name-input {
+      flex-basis: 180px;
+    }
+
     .guide-btn {
       flex-shrink: 0;
     }
@@ -3425,6 +3436,39 @@
       font-size: 0.72rem;
       color: var(--muted);
       margin-top: 0.6rem;
+    }
+
+    .guide-status {
+      display: none;
+      font-size: 0.76rem;
+      color: var(--emerald-light);
+      margin-top: 0.7rem;
+      line-height: 1.6;
+    }
+
+    .guide-status a {
+      color: var(--gold);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    @media(max-width:700px) {
+      .guide-wrapper {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 1.25rem;
+        border-radius: 22px;
+      }
+
+      .guide-book {
+        width: min(235px, 72vw);
+        transform: perspective(700px) rotateY(0) rotateX(0);
+      }
+
+      .book-proof-item {
+        grid-template-columns: 1fr;
+        gap: 0.55rem;
+      }
     }
 
     /* ─── ADDITIONAL MOBILE ─── */
@@ -3505,7 +3549,7 @@
           We build retirement income plans — the tax sequencing, withdrawal order, Social Security timing, and income
           floor decisions that determine whether your accumulated wealth actually carries you and your spouse through
           retirement.<br><br>
-          One conversation. No products, No pitch, No pressure.
+          No products, No pitch, No pressure.
         </p>
         <div class="hero-actions">
           <a href="schedule.html" class="btn-gold" aria-label="Schedule a retirement planning consultation">Schedule
@@ -4577,8 +4621,8 @@
       <div class="about-grid">
         <div class="about-portrait-wrap reveal-left">
           <div class="about-portrait">
-            <img src="assets/images/founder.png" alt="Robert Boeck, Founder of Retirement Roadmap Experts" loading="lazy"
-              decoding="async">
+            <img src="assets/images/founder.png" alt="Robert Boeck, Founder of Retirement Roadmap Experts"
+              loading="lazy" decoding="async">
             <div class="portrait-inner">
               <div class="portrait-name">Robert Boeck</div>
               <div class="portrait-title">Founder & Lead Advisor</div>
@@ -4780,7 +4824,8 @@
         }
       </style>
       <div class="blog-index-grid">
-        <a class="blog-index-card reveal" href="blog/retirement-plan-estate-planning-finish-line.html"><img src="assets/images/blog/image1.jpg"
+        <a class="blog-index-card reveal" href="blog/retirement-plan-estate-planning-finish-line.html"><img
+            src="assets/images/blog/image1.jpg"
             alt="Estate planning diagram connecting wills, trusts, probate, and powers of attorney" loading="lazy">
           <div class="blog-index-copy"><span class="res-cat">Estate Planning</span>
             <h3>The Retirement Plan You Built Deserves a Finish Line</h3>
@@ -4811,47 +4856,70 @@
     <!-- ═══════════════ LEAD MAGNET ═══════════════ -->
     <section class="section section-alt" id="lead-magnet" role="region" aria-labelledby="guide-heading">
       <div class="guide-wrapper reveal">
-        <div class="guide-visual" aria-hidden="true">
+        <div class="guide-visual">
           <div class="guide-book">
-            <div class="guide-book-spine"></div>
-            <div class="guide-book-cover">
-              <div class="guide-book-label">FREE GUIDE</div>
-              <div class="guide-book-title">The Executive's Retirement Income Playbook</div>
-              <div class="guide-book-sub">22 pages · PDF</div>
-            </div>
+            <img src="assets/images/from-accumulation-to-income-cover.jpg"
+              alt="From Accumulation to Income book cover by Robert Boeck" loading="lazy">
           </div>
         </div>
         <div class="guide-content">
           <div class="eyebrow"><span class="eyebrow-line"></span> Free Resource</div>
-          <h2 class="section-title" id="guide-heading">The Executive's Retirement <em>Income Playbook</em></h2>
-          <p class="guide-desc">A 22-page guide covering the six most consequential retirement income decisions for
-            senior executives — with frameworks, real examples, and actionable checklists.</p>
-          <ul class="guide-contents">
-            <li><span class="gc-check" aria-hidden="true">✓</span> The Roth Conversion Window: How to identify and use
-              yours</li>
-            <li><span class="gc-check" aria-hidden="true">✓</span> Withdrawal Sequencing: The 3-account framework</li>
-            <li><span class="gc-check" aria-hidden="true">✓</span> Social Security timing decision matrix</li>
-            <li><span class="gc-check" aria-hidden="true">✓</span> RMD risk assessment checklist</li>
-            <li><span class="gc-check" aria-hidden="true">✓</span> Deferred compensation planning framework</li>
-            <li><span class="gc-check" aria-hidden="true">✓</span> Early retirement feasibility scorecard</li>
-          </ul>
+          <h2 class="section-title" id="guide-heading"><em>From Accumulation to Income</em></h2>
+          <p class="guide-desc">The High-Achieving Professional's Guide to a Reliable, Tax-Smart Retirement Income
+            Strategy.</p>
+          <div class="book-proof-panel">
+            <div class="book-proof-item">
+              <span class="book-proof-icon" aria-hidden="true">1</span>
+              <div>
+                <h3>4 Self-Scoring Quizzes + Real Client Success Stories</h3>
+                <p>Each chapter includes a self-assessment quiz so you can pinpoint exactly where your retirement income
+                  plan has gaps.</p>
+              </div>
+            </div>
+            <div class="book-proof-item">
+              <span class="book-proof-icon" aria-hidden="true">2</span>
+              <div>
+                <h3>Real-World Outcomes</h3>
+                <p>Client stories show how executives and professionals retired earlier than planned, reduced lifetime
+                  taxes by <strong>$150,000–$312,000</strong>, and finally answered: <em>Am I going to be okay?</em></p>
+              </div>
+            </div>
+            <div class="book-proof-item">
+              <span class="book-proof-icon" aria-hidden="true">3</span>
+              <div>
+                <h3>Primary-Source Planning</h3>
+                <p>Every strategy is backed by primary sources: <strong>Kiplinger Personal Finance</strong>, the
+                  <strong>IRS</strong> Publication 590-B and RMD rules, the <strong>Social Security
+                    Administration</strong> delayed retirement credits and survivor benefit rules, and the
+                  <strong>Centers for Medicare &amp; Medicaid Services</strong> IRMAA thresholds.</p>
+              </div>
+            </div>
+          </div>
           <form class="guide-form" action="https://formsubmit.co/thelocalpixel@gmail.com" method="POST"
-            aria-label="Download the Executive Retirement Income Playbook">
-            <input type="hidden" name="_subject" value="New free retirement book download">
+            target="guide-submit-frame" data-download-url="book.pdf"
+            aria-label="Download From Accumulation to Income">
+            <input type="hidden" name="_subject" value="Someone downloaded the retirement book">
             <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="resource" value="The Executive's Retirement Income Playbook">
-            <input type="hidden" name="_autoresponse"
-              value="Thanks for requesting the free retirement book. Access it here: https://www.amazon.com/Accumulation-Income-High-Achieving-Professionals-Retirement-ebook/dp/B0GX2YKS9B/">
-            <input type="hidden" name="_next"
-              value="https://www.amazon.com/Accumulation-Income-High-Achieving-Professionals-Retirement-ebook/dp/B0GX2YKS9B/">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="resource" value="Book PDF: From Accumulation to Income">
+            <input type="hidden" name="downloaded_from" value="Retirement Roadmap Experts homepage">
             <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
             <div class="guide-form-row">
+              <input type="text" name="name" class="finput guide-input guide-name-input" placeholder="Your name"
+                required autocomplete="name" aria-label="Name">
               <input type="email" name="email" class="finput guide-input" placeholder="Your email address" required
                 autocomplete="email" aria-label="Email address">
               <button type="submit" class="btn-gold guide-btn">Download Free Guide</button>
             </div>
-            <p class="guide-privacy">No spam. Unsubscribe anytime. We respect your privacy.</p>
+            <p class="guide-status" role="status" aria-live="polite">Thanks — your download should begin now. If it
+              doesn’t, <a href="book.pdf" download>click here to download the book</a>.</p>
+            <p class="guide-privacy">No spam. We respect your privacy.</p>
+            <noscript>
+              <p class="guide-privacy">After submitting, please <a href="book.pdf" download>click here to download the
+                  book</a>.</p>
+            </noscript>
           </form>
+          <iframe name="guide-submit-frame" title="Book download notification" hidden></iframe>
         </div>
       </div>
     </section>
@@ -5423,7 +5491,7 @@
           professionals. Helping you retire earlier, spend more confidently, and pay less in taxes over your lifetime.
         </p>
         <div style="margin-top:1.2rem; display:flex; gap:0.8rem; flex-wrap:wrap;">
-          <a href="https://linkedin.com" aria-label="LinkedIn"
+          <a href="https://www.linkedin.com/in/robboeck/" aria-label="LinkedIn"
             style="color:var(--muted); font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; transition:color 0.2s; text-decoration:none;">LinkedIn</a>
           <span style="color:rgba(255,255,255,0.1)">|</span>
           <a href="https://www.youtube.com/@RetirementRoadmapExperts" target="_blank" rel="noopener"
@@ -6222,6 +6290,41 @@
         guideBook.style.transition = 'transform 0.5s ease';
       });
       guideBook.style.transition = 'transform 0.15s ease';
+    }
+
+    /* ── GUIDE DOWNLOAD LEAD CAPTURE ── */
+    const guideForm = document.querySelector('.guide-form');
+    if (guideForm) {
+      guideForm.addEventListener('submit', () => {
+        const downloadUrl = guideForm.dataset.downloadUrl || 'book.pdf';
+        const status = guideForm.querySelector('.guide-status');
+        const button = guideForm.querySelector('.guide-btn');
+
+        if (button) {
+          button.textContent = 'Downloading...';
+          button.disabled = true;
+        }
+
+        if (status) {
+          status.style.display = 'block';
+        }
+
+        const downloadLink = document.createElement('a');
+        downloadLink.href = downloadUrl;
+        downloadLink.download = 'From-Accumulation-to-Income.pdf';
+        downloadLink.style.display = 'none';
+        document.body.appendChild(downloadLink);
+
+        setTimeout(() => {
+          downloadLink.click();
+          downloadLink.remove();
+
+          if (button) {
+            button.textContent = 'Download Free Guide';
+            button.disabled = false;
+          }
+        }, 250);
+      });
     }
 
     /* ── ENHANCED NAV SCROLL COLOR ── */
